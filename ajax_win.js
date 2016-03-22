@@ -1,6 +1,9 @@
 /**
- * Created by Tomas Hujer on 21.3.16.
+ * Created by Tomas Hujer on 21.3.2016
  * thujer at gmail com
+ *
+ * More info at https://github.com/thujer/ajax_win
+ *
  */
 
 /**
@@ -13,25 +16,29 @@
  */
 function ajax_win(s_ajax_url, s_tmp_source, o_ajax_params, o_tmp_var) {
 
-    $('*[data-action="ajax_win"][data-procedure]').each(function() {
+    var html_tmp_default = '<div class="ajax_win" data-type="window">'
+        +'<div class="close">Zavřít</div>'
+        +'<div class="heading">{s_title}</div><hr />'
+        +'<div class="ajax-loader" data-target="content">Zpracovávám...</div>'
+        +'</div>';
 
-        var e_elm = this;
+    $('*[data-action="ajax_win"][data-s_procedure_name]').each(function() {
 
-        var html_tmp_default = '<div class="ajax_win" data-type="window">'
-            +'<div class="close">Zavřít</div>'
-            +'<div class="heading">{s_title}</div><hr />'
-            +'<div class="ajax-loader" data-target="content">Zpracovávám...</div>'
-            +'</div>';
-
-
-        // Add property to ajax params
-        o_ajax_params['s_proc_name'] = $(e_elm).attr('data-procedure') || '';
         o_ajax_params['__modal'] = 1;
 
-        $(e_elm).css({
+        $(this).css({
             cursor: 'pointer',
             textDecoration: 'underline'
         }).on('click', function() {
+
+            var e_elm = this;
+
+            var o_data = $(e_elm).data();
+
+            // Add all properties to ajax params
+            $.each(o_data, function(s_name, s_value) {
+                o_ajax_params[s_name] = s_value;
+            });
 
             var s_ajax_win = '.ajax_win';
             var html = $(s_tmp_source).html();
@@ -84,5 +91,7 @@ function ajax_win(s_ajax_url, s_tmp_source, o_ajax_params, o_tmp_var) {
                 }
             });
         });
-    });
+   });
 }
+
+
