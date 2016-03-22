@@ -9,8 +9,8 @@ Example call:
     /**
      * Add ajax window
      */
-    ajax_win('/admin/abra/stat-ajax', '#tmp_ajax_win', {
-        nl_id_abra_received_order: 1
+    ajax_win('/controller/action', '#tmp_ajax_win', {
+        test: 1
     }, {
         s_title: 'Example message title'
     });
